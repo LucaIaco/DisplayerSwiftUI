@@ -7,7 +7,7 @@ This project provides an alternative solution to decouple the presentation logic
   - iOS 17.0.1 (iPhone and iPad)
 
 Our first goal is to be able to display a view without knowing in advance which view we aim to display, and without directly putting view or view modifiers in a given SwiftUI view (or the less possible).
-Secondly, we try to reduce to the minimum the effort of handling navigation for apps running on both iOS 15 and iOS 16+. We all have to deal with the huge differences between the `NavigationView` and `NavigationLink` vs the new `NavigaitonStack`.
+Secondly, we try to reduce to the minimum the effort of handling navigation for apps running on both iOS 15 and iOS 16+. We all have to deal with the huge differences between the `NavigationView` and `NavigationLink` vs the new `NavigaitonStack`, and the this solution abstracts the concept so that you won't have to deal with them directly.
 Lastly, we try to see how this works in apps which may start from a UIKit environment. 
 
 The project contains the reusable components that make the underlying mechanism to work. You can find them under the folder `Displayable`, which are `Displayable.ViewItem.swift` and `Displayable.Views.swift`. The code is higly commented, I hope will give you a good understanding of all the showcased scenario
@@ -32,9 +32,13 @@ self.displayingItem = .init(displayMode: .pushed, anyView: DummyViewController(v
 self.pushView(DummyViewController(viewModel: DummyViewModel(coordinator: self)))
 ```
 
-### Demo showcase
+### Demo showcase (iOS 16 +)
 
 https://github.com/LucaIaco/DisplayerSwiftUI/assets/7451313/e8f488f6-5ae7-4b1b-9e24-b6276ef3c898
+
+### Demo showcase (iOS 15)
+
+https://github.com/LucaIaco/DisplayerSwiftUI/assets/7451313/9b7153a1-7481-4e4f-a868-3c5f43598183
 
 ### DisplayerProtocol
 
