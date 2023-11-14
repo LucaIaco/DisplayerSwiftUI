@@ -1,7 +1,12 @@
 # DisplayerSwiftUI
-This project provides an alternative solution to decouple the presentation logic when dealing with SwiftUI views, in terms of modal/sheet presentation and navigation, for iOS 15 and iOS 16+
+This project provides an alternative solution to decouple the presentation logic when dealing with SwiftUI views, in terms of modal/sheet presentation and navigation, for iOS 15 and iOS 16+.
 
-Our first goal is to be able to display a view without knowing in advance which view we aim to display, and without directly putting view or view modifiers in a given SwiftUI view.
+- Used Xcode version: 15.0.1
+- Tested on:
+  - iOS 15.0 (iPhone and iPad)
+  - iOS 17.0.1 (iPhone and iPad)
+
+Our first goal is to be able to display a view without knowing in advance which view we aim to display, and without directly putting view or view modifiers in a given SwiftUI view (or the less possible).
 Secondly, we try to reduce to the minimum the effort of handling navigation for apps running on both iOS 15 and iOS 16+. We all have to deal with the huge differences between the `NavigationView` and `NavigationLink` vs the new `NavigaitonStack`.
 Lastly, we try to see how this works in apps which may start from a UIKit environment. 
 
