@@ -32,6 +32,10 @@ self.displayingItem = .init(displayMode: .pushed, anyView: DummyViewController(v
 self.pushView(DummyViewController(viewModel: DummyViewModel(coordinator: self)))
 ```
 
+### Demo showcase
+
+https://github.com/LucaIaco/DisplayerSwiftUI/assets/7451313/e8f488f6-5ae7-4b1b-9e24-b6276ef3c898
+
 ### DisplayerProtocol
 
 The `DisplayerProtocol` is used by the object in charge of displaying a new view(s), from the current displayed view. It conforms already to `ObservableObject` and the exposed properties are:
