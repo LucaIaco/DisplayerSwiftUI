@@ -59,7 +59,7 @@ Assuming we are adopting an MVVM pattern architecture, this could be the view mo
 
 ### Displayable.ViewItem
 
-The `Displayable.ViewItem`, is the actual object that describes what view to be displayed and how, from the current displayed view. When this property changes in the conforming `DisplayerProtocol` object, the SwiftUI view will react accordingly and perform the correspoing action to display it. The view can be displayed modally, as form sheet, or pushed in the navigation. See the options in the `Displayable.ViewItem.DisplayMode`. It allows to display a SwiftUI view directly or, a UIViewController based object. In the latter, the component will automatically wrap the view controller in a `UIViewControllerRepresentable`. See the component `Displayable.UIVCWrapperView` for more info
+The `Displayable.ViewItem`, is the actual object that describes what view to be displayed and how, from the current displayed view. When this property changes in the conforming `DisplayerProtocol` object, the SwiftUI view will react accordingly and perform the corresponding action to display it. The view can be displayed modally, as form sheet, or pushed in the navigation. See the options in the `Displayable.ViewItem.DisplayMode`. It allows to display a SwiftUI view directly or a UIViewController based object. In the latter, the component will automatically wrap the view controller in a `UIViewControllerRepresentable`. See the component `Displayable.UIVCWrapperView` for more info
 
 ### Displayable.RootView
 
