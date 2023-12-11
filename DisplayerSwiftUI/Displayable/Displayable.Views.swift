@@ -34,6 +34,10 @@ extension Displayable {
         
         typealias VCType = T
         
+        final class Coordinator {
+            var parentObserver: NSKeyValueObservation?
+        }
+        
         /// Initializes the view controller wrapper view
         /// - Parameters:
         ///   - blockMake: the closure which injects the actual View controller to display
@@ -46,8 +50,20 @@ extension Displayable {
         let blockMake: (_ context:Context) -> VCType
         let blockUpdate: ((_ uiViewController:VCType, _ context:Context) -> ())?
         
-        func makeUIViewController(context: Context) -> VCType { blockMake(context) }
+        func makeUIViewController(context: Context) -> VCType {
+            let vc = blockMake(context)
+            // this will assign the navigation item title and right bar button items from the view controller
+            // to the intermediate parent view controller which is placed between this view controller and the
+            // parent SwiftUI view which will wrap this view controller (SwiftUI view > parentVC > vc), in the
+            // scenario where this will be then pushed from a NavigationView / NavigationStack
+            context.coordinator.parentObserver = vc.observe(\.parent, changeHandler: { vc, _ in
+                vc.parent?.navigationItem.title = vc.navigationItem.title
+                vc.parent?.navigationItem.rightBarButtonItems = vc.navigationItem.rightBarButtonItems
+            })
+            return vc
+        }
         func updateUIViewController(_ vc: VCType, context: Context) { blockUpdate?(vc, context) }
+        func makeCoordinator() -> Self.Coordinator { .init() }
     }
 }
 
@@ -134,7 +150,7 @@ fileprivate extension Displayable {
             }, set: {
                 // makes sure that the outer displayingItem will be updated only if displayMode is 'pushed'.
                 // This setter is called when the user manually pops back (horizontal swipe or back button in
-                // the navigaiton bar)
+                // the navigation bar)
                 guard displayingItem.wrappedValue.displayMode == .pushed else { return }
                 displayingItem.wrappedValue.items = $0
             })
@@ -147,7 +163,7 @@ fileprivate extension Displayable {
                 guard displayingItem.wrappedValue.displayMode == .pushed,
                       newItem == nil, !displayingItem.wrappedValue.items.isEmpty else { return }
                 // This setter is called when the user manually pops back (horizontal swipe or back button in
-                // the navigaiton bar)
+                // the navigation bar)
                 displayingItem.wrappedValue.items.removeLast()
             })
             self.navigationHandling = navigationHandling
@@ -218,15 +234,15 @@ extension Displayable {
     
     /// Set of options which can be used in the `DisplayModifier` for handling the navigation stack
     enum NavigationHandling {
-        /// It handles the navigation, and wraps the content in a NavigaitonStack / NavigationView
+        /// It handles the navigation, and wraps the content in a NavigationStack / NavigationView
         ///
-        /// The content gets wrapped in a NavigationStack (iOS 16+) or NavigaitonView (iOS 15), and makes explicit use of .navigationDestination (iOS 16+) or NavigationLink (iOS 15)
+        /// The content gets wrapped in a NavigationStack (iOS 16+) or NavigationView (iOS 15), and makes explicit use of .navigationDestination (iOS 16+) or NavigationLink (iOS 15)
         case handledWrapInNavigation
         /// It handles the navigation, using the content as is, and makes explicit use of .navigationDestination (iOS 16+) or NavigationLink (iOS 15)
         case handledNoWrap
         /// It does not handle the navigation. It means, if the `displayingItem` passed to `DisplayModifier` has `displayMode` set as `pushed`, no action will be taken, Therefore only `.modal` and `.sheet` will work.
         ///
-        /// Worth to mention, this will not place in the view any view or view modifier which serves the purpose of navigating (so, no NavigaitonStack / NavigationView / NavigationLink, navigationDestination() )
+        /// Worth to mention, this will not place in the view any view or view modifier which serves the purpose of navigating (so, no NavigationStack / NavigationView / NavigationLink, navigationDestination() )
         case notHandled
     }
     

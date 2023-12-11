@@ -57,7 +57,7 @@ class MainCoordinator: DisplayerProtocol {
     //MARK: Public
     
     /// Used in the UIKit context to initialize the MvvM-C and display it on screen
-    /// - Parameter wrapInUINavigationController: if `true` it wraps the hosting controller in a navigation controller or use it as is. Default: `false`. (if `true`, pushing won't work in iOS 16 without also a NavigaitonStack)
+    /// - Parameter wrapInUINavigationController: if `true` it wraps the hosting controller in a navigation controller or use it as is. Default: `false`. (if `true`, pushing won't work in iOS 16 without also a NavigationStack)
     func start(_ wrapInUINavigationController:Bool = false) {
         
         // Create SwiftUI view
@@ -156,13 +156,13 @@ class MainCoordinator: DisplayerProtocol {
             }
         
         } else {
-            // until iOS 15, we can use only NavigaitonView and NavigationLink. Those are not designed to stack screens from one source of truth, instead they expect us to have a new NavigationLink in each new pushed view.
+            // until iOS 15, we can use only NavigationView and NavigationLink. Those are not designed to stack screens from one source of truth, instead they expect us to have a new NavigationLink in each new pushed view.
             let newCoordinator = MainCoordinator(parentDisplayer: self)
             view = Main.buildWrappedInRoot(displayer: newCoordinator,
                                            viewModel: MainViewModel(coordinator: newCoordinator),
                                            navigationHandling: .handledNoWrap,
                                            title: "New pushed MainView",
-                                           description: "**iOS 15 handled**\nThis is a SwiftUI view pushed from the previous SwiftUI view **NavigationView**.\n\nThis view is wrapped in a **Displayable.RootView** and responds to to his own **MainCoordinator**, and consequently, to his own **displayingItem**. until iOS 15, we need to use the **NavigaitonView**, which doesn't work as source of truth like for the newly introduced iOS 16 component **NavigationStack**",
+                                           description: "**iOS 15 handled**\nThis is a SwiftUI view pushed from the previous SwiftUI view **NavigationView**.\n\nThis view is wrapped in a **Displayable.RootView** and responds to to his own **MainCoordinator**, and consequently, to his own **displayingItem**. until iOS 15, we need to use the **NavigationView**, which doesn't work as source of truth like for the newly introduced iOS 16 component **NavigationStack**",
                                            closeOption: .popBack)
             // Enter in navigation mode, or push the view directly on the current stack
             if self.displayingItem.displayMode != .pushed {

@@ -54,7 +54,7 @@ extension DisplayerProtocol {
     
     /// This method pushes a new view in the `displayingItem.items` array
     ///
-    /// Important: In iOS 16, given the single source of truth of `NavigaitonStack`, we try to push from the
+    /// Important: In iOS 16, given the single source of truth of `NavigationStack`, we try to push from the
     /// `parentDisplayer`, if that exists and the `displayingItem.displayMode == .pushed`. This would be recursive
     /// - Parameter view: the view to push in the stack
     func pushView(_ view: Any) {
@@ -67,7 +67,7 @@ extension DisplayerProtocol {
         }
     }
     
-    /// This method pop back in the navigaiton stack, in case the current `displayingItem.displayMode` is `.pushed`
+    /// This method pop back in the navigation stack, in case the current `displayingItem.displayMode` is `.pushed`
     func popBack() {
         let didPop = self.displayingItem.popView()
         if !didPop, let parentDisplayer, [.pushed,.none].contains( parentDisplayer.displayingItem.displayMode) {
@@ -75,7 +75,7 @@ extension DisplayerProtocol {
         }
     }
     
-    /// This method pops to root in the navigaiton stack, in case the current `displayingItem.displayMode` is `.pushed`
+    /// This method pops to root in the navigation stack, in case the current `displayingItem.displayMode` is `.pushed`
     func popToRoot() {
         if #available(iOS 16, *) {
             // since iOS 16, in DisplayableModifier, we ue the single source of truth NavigationStack

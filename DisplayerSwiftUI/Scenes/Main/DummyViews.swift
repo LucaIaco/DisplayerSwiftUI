@@ -67,7 +67,7 @@ class DummyViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         // This, as is within a UIViewControllerRepresentable wouldn't work, so in `Dislayable.ViewItem` will
-        // take care of setting this title as view modifier .navigationTitle("My title")
+        // take care of setting this title as view modifier .navigationTitle("My title") without glitches
         self.navigationItem.title = "My UIKit Title"
     }
     
